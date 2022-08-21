@@ -1,3 +1,6 @@
 [submodule "ezUI/ext/glm"]
 	path = ezUI/ext/glm
 	url = https://github.com/g-truc/glm
+[submodule "ezUI/ext/glfw"]
+	path = ezUI/ext/glfw
+	url = https://github.com/glfw/glfw
