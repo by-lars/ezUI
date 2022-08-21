@@ -1,0 +1,3 @@
+[submodule "ezUI/ext/glm"]
+	path = ezUI/ext/glm
+	url = https://github.com/g-truc/glm
