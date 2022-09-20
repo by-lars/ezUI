@@ -93,10 +93,13 @@
     <ClCompile Include="src\Graphics\RenderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\Profiling.cpp">
+    <ClCompile Include="src\Debug\Profiling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GFXApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +152,7 @@
     <ClInclude Include="src\Graphics\DeviceResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\StrongHandle.h">
+    <ClInclude Include="src\Core\StrongHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Build\BuildConfig.h">
@@ -158,10 +161,22 @@
     <ClInclude Include="src\Graphics\ManagedBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\Profiling.h">
+    <ClInclude Include="src\Debug\Profiling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\GFXApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\HandleStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ezUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

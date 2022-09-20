@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 
-namespace ez {
+namespace ez::debug {
 	class ProfilingTimer {
 	public:
 		ProfilingTimer(const std::string& name);
@@ -47,11 +47,11 @@ namespace ez {
 #define EZ_FUNC_SIG "EZ_FUNC_SIG: Unknown compiler"
 #endif
 
-#if EZ_ENABLE_PROFILING
-#define EZ_PROFILE_BEGIN_SESSION(name) ez::Profiler::Get().StartSession(name)
-#define EZ_PROFILE_END_SESSION() ez::Profiler::Get().EndSession()
+#if EZ_BUILD_ENABLE_PROFILING
+#define EZ_PROFILE_BEGIN_SESSION(name) ez::debug::Profiler::Get().StartSession(name)
+#define EZ_PROFILE_END_SESSION() ez::debug::Profiler::Get().EndSession()
 
-#define EZ_PROFILE_FUNCTION() ez::ProfilingTimer(EZ_FUNC_SIG);
+#define EZ_PROFILE_FUNCTION() ez::debug::ProfilingTimer(EZ_FUNC_SIG);
 #else 
 #define EZ_PROFILE_BEGIN_SESSION(name) 
 #define EZ_PROFILE_END_SESSION() 

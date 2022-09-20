@@ -1,24 +1,28 @@
 #include "Core/UIApp.h"
 #include "Core/Base.h"
 #include "Graphics/Renderer2D.h"
-#include "Utility/Profiling.h"
+#include "Debug/Profiling.h"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 namespace ez {
-	UIApp* UIApp::Create(const UIAppSpecification& settings) {
+	gfx::HBrush defaultBrush;
+	gfx::HBrush defaultBrush2;
+
+
+	UIApp* UIApp::Create(const UIApp::Specification& settings) {
 		return new UIApp(settings);
 	}
 
 	void UIApp::OnFramebufferSizeChanged(GLFWwindow* window, int width, int height) {
 		if (width > 0 && height > 0) {
-			Renderer2D::SetRenderSize(width, height);
+			gfx::Renderer2D::SetRenderSize(width, height);
 		}
 	}
 
-	UIApp::UIApp(const UIAppSpecification& settings) {
+	UIApp::UIApp(const UIApp::Specification& settings) {
 		ez::Logger::Init();
 		
 		EZ_PROFILE_BEGIN_SESSION("Startup");
@@ -33,7 +37,7 @@ namespace ez {
 		glfwWindowHint(GLFW_SAMPLES, 4);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		#ifdef EZ_DEBUG
+		#ifdef EZ_BUILD_DEBUG_MODE
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 		#endif
 
@@ -42,7 +46,13 @@ namespace ez {
 		glfwSetFramebufferSizeCallback(m_Window, UIApp::OnFramebufferSizeChanged);
 		glfwSetWindowUserPointer(m_Window, this);
 
-		Renderer2D::Init(m_Spec.Width, m_Spec.Height);
+		gfx::Renderer2D::Init(m_Spec.Width, m_Spec.Height);
+
+		defaultBrush = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(1.0, 1.0, 1.0, 1.0));
+		defaultBrush2 = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(0.0, 1.0, 1.0, 1.0));
+
+
+
 
 		EZ_PROFILE_END_SESSION();
 	}
@@ -50,7 +60,7 @@ namespace ez {
 	UIApp::~UIApp() {
 		EZ_PROFILE_BEGIN_SESSION("Shutdown");
 
-		Renderer2D::Shutdown();
+		gfx::Renderer2D::Shutdown();
 		glfwTerminate();
 
 		EZ_PROFILE_END_SESSION();
@@ -70,12 +80,18 @@ namespace ez {
 			frameRate += std::to_string((1 / delta));
 			glfwSetWindowTitle(m_Window, frameRate.c_str());
 
-			Renderer2D::SetViewMatrix(glm::mat4(1.0f));
-			Renderer2D::BeginScene();
+			gfx::Renderer2D::SetViewMatrix(glm::mat4(1.0f));
+			gfx::Renderer2D::BeginScene();
 			for (int i = 0; i < 100; i++) {
-				Renderer2D::DrawRect(glm::vec3(i, i, 0), glm::vec2(8, 8), glm::vec3(0));
+				if (i % 2 == 0) {
+					gfx::Renderer2D::DrawRect(defaultBrush, glm::vec3(i*8, i*8, 0), glm::vec2(8, 8), glm::vec3(0));
+				}
+				else {
+					gfx::Renderer2D::DrawRect(defaultBrush2, glm::vec3(i*8, i * 8, 0), glm::vec2(8, 8), glm::vec3(0));
+
+				}
 			}
-			Renderer2D::EndScene();
+			gfx::Renderer2D::EndScene();
 		
 			glfwSwapBuffers(m_Window);
 			lastFrameTime = currentFrameTime;

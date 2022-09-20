@@ -5,13 +5,13 @@
 #endif
 
 namespace ez {
-#ifdef DEBUG
-	LogLevel Logger::s_CurrentLevel = LogLevel::DEALLOC;
+#if EZ_BUILD_DEBUG_MODE
+	Logger::Level Logger::s_CurrentLevel = Logger::Level::DEALLOC;
 #else
 	LogLevel Logger::s_CurrentLevel = LogLevel::LOG;
 #endif
 
-	void Logger::SetLevel(LogLevel level) {
+	void Logger::SetLevel(Logger::Level level) {
 		s_CurrentLevel = level;
 	}
 

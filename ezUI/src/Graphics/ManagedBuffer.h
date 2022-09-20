@@ -11,7 +11,7 @@
 
 #include <glad/gl.h>
 
-namespace ez {
+namespace ez::gfx {
 	template<typename T>
 	class ManagedBuffer {
 	public:
@@ -21,7 +21,7 @@ namespace ez {
 			return std::make_unique<ManagedBuffer<T>>(device, maxCount);
 		}
 
-		ManagedBuffer(std::shared_ptr<RenderAPI> device, uint32_t maxCount)  : m_MaxCount(maxCount), m_Device(device) {
+		ManagedBuffer(std::shared_ptr<RenderAPI> device, uint32_t maxCount) : m_MaxCount(maxCount), m_Device(device) {
 			m_BufferHandle = device->CreateBuffer(maxCount * sizeof(T) * 3, BufferType::SHADER_STORAGE, 0);
 			m_GPUStorage = (T*)device->GetBufferPointer(m_BufferHandle);
 
@@ -46,10 +46,10 @@ namespace ez {
 
 		void BeginScene() {
 			GLsync sync = m_Fences[m_Index];
-			
+
 			if (sync) {
 				while (true) {
- 					GLenum wait = glClientWaitSync(sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1);
+					GLenum wait = glClientWaitSync(sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1);
 					if (wait == GL_ALREADY_SIGNALED || wait == GL_CONDITION_SATISFIED) {
 						return;
 					}
@@ -66,7 +66,7 @@ namespace ez {
 
 			m_Fences[m_Index] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 
-			m_Index = (m_Index+1) % 3;
+			m_Index = (m_Index + 1) % 3;
 			m_Offset = m_Index * m_MaxCount;
 			m_Count = 0;
 		}

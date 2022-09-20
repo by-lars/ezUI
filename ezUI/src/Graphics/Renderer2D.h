@@ -1,9 +1,12 @@
 #pragma once
-#include "Utility/StrongHandle.h"
+#include "Core/StrongHandle.h"
+#include "Graphics/DeviceResources.h"
 #include <glm/glm.hpp>
 
+namespace ez::gfx {
+	EZ_MAKE_STRONG_HANDLE(HBrush);
+	EZ_MAKE_STRONG_HANDLE(HSprite);
 
-namespace ez {
 	class Renderer2D {
 	public:
 		static void Init(uint32_t width, uint32_t height);
@@ -15,8 +18,9 @@ namespace ez {
 		static void BeginScene();
 		static void EndScene();
 
-		//static BrushHandle CreateSolidColorBrush(glm::vec4 color);
+		static HBrush CreateSolidColorBrush(const glm::vec4& color);
 
-		static void DrawRect(const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
+		static void DrawRect(HBrush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
+		static void DrawRect(HBrush brush, const glm::vec3& position, const glm::vec2& size);
 	};
 }

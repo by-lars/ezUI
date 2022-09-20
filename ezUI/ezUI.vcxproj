@@ -59,7 +59,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_GLFW_WIN32;_CRT_SECURE_NO_WARNINGS;DEBUG;EZ_DEBUG_BUILD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_GLFW_WIN32;_CRT_SECURE_NO_WARNINGS;DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -113,11 +113,12 @@
     <ClCompile Include="ext\glfw\src\window.c" />
     <ClCompile Include="src\Build\GladBuild.cpp" />
     <ClCompile Include="src\Core\Base.cpp" />
+    <ClCompile Include="src\Core\GFXApp.cpp" />
     <ClCompile Include="src\Core\UIApp.cpp" />
     <ClCompile Include="src\Graphics\RenderAPI.cpp" />
     <ClCompile Include="src\Graphics\Renderer2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLAPI.cpp" />
-    <ClCompile Include="src\Utility\Profiling.cpp" />
+    <ClCompile Include="src\Debug\Profiling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\glfw\src\internal.h" />
@@ -130,17 +131,21 @@
     <ClInclude Include="ext\glfw\src\win32_thread.h" />
     <ClInclude Include="ext\glfw\src\win32_time.h" />
     <ClInclude Include="include\Core\UIApp.h" />
+    <ClInclude Include="src\Core\GFXApp.h" />
     <ClInclude Include="src\Core\Base.h" />
     <ClInclude Include="src\Build\BuildConfig.h" />
     <ClInclude Include="src\Core\UIApp.h" />
-    <ClInclude Include="src\Utility\StrongHandle.h" />
+    <ClInclude Include="src\ezUI.h" />
+    <ClInclude Include="src\UI\Scene.h" />
+    <ClInclude Include="src\Core\HandleStore.h" />
+    <ClInclude Include="src\Core\StrongHandle.h" />
     <ClInclude Include="src\Graphics\BuiltinShader.h" />
     <ClInclude Include="src\Graphics\DeviceResources.h" />
     <ClInclude Include="src\Graphics\RenderAPI.h" />
     <ClInclude Include="src\Graphics\Renderer2D.h" />
     <ClInclude Include="src\Graphics\ManagedBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLAPI.h" />
-    <ClInclude Include="src\Utility\Profiling.h" />
+    <ClInclude Include="src\Debug\Profiling.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ext\glfw\src\mappings.h.in" />

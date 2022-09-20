@@ -1,9 +1,9 @@
-#include "Utility/Profiling.h"
+#include "Debug/Profiling.h"
 #include "Core/Base.h"
 #include <GLFW/glfw3.h>
 #include <iomanip>
 
-namespace ez {
+namespace ez::debug {
 	ProfilingTimer::ProfilingTimer(const std::string& name) 
 	: m_Name(name) {
 		m_StartTime = glfwGetTime();
