@@ -50,13 +50,15 @@ namespace ez::gfx {
 		virtual void Set(const std::string& location, int value) = 0;
 	};
 
-	class Storage {
+	class StreamStorage {
 	public:
-		virtual ~Storage() {}
-		virtual void Upload(uint32_t nBytes, uint32_t offset, void* data) = 0;
-		virtual void PushBack() = 0;
-		virtual void Bind() = 0;
-		virtual void Lock() = 0;
-		virtual void Unlock() = 0;
+		virtual ~StreamStorage() {}
+		virtual void PushBack(void* data) = 0;
+
+		virtual uint32_t Count() = 0;
+		virtual uint32_t Offset() = 0;
+
+		virtual void BeginFrame() = 0;
+		virtual void EndFrame() = 0;
 	};
 }

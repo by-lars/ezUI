@@ -73,6 +73,18 @@ namespace ez::gfx {
 		}
 	}
 
+	GL_TextureArray::~GL_TextureArray() {
+		glDeleteTextures(1, &m_Texture);
+	}
+
+	void GL_TextureArray::Bind() {
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
+	}
+
+	uint32_t GL_TextureArray::GetMaxLayers() {
+		return m_MaxLayers;
+	}
+
 	void GL_TextureArray::BindToSlot(uint32_t slot) {
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
@@ -82,6 +94,7 @@ namespace ez::gfx {
 		Layer layer = m_FreeLayers.front();
 		m_FreeLayers.pop();
 		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, (GLint)layer, m_Width, m_Height, 1, m_Format, GL_UNSIGNED_BYTE, data);
+		return layer;	
 	}
 
 	void GL_TextureArray::Erase(Layer layer) {

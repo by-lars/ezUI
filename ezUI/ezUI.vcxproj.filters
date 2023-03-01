@@ -99,12 +99,6 @@
     <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ez\Core\GFXApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ez\Graphics\Renderer\Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -179,9 +173,6 @@
     <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ez\Core\GFXApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ez\Core\StrongHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -189,9 +180,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ezUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ez\Graphics\Renderer\Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_Shader.h">

@@ -13,8 +13,6 @@
 #include <queue>
 
 namespace ez::gfx {
-	static std::shared_ptr<RenderAPI> s_Device = nullptr;
-
 	constexpr int MAX_QUADS = 20000;
 
 	struct QuadData {
@@ -22,24 +20,18 @@ namespace ez::gfx {
 		uint32_t Data2[4];
 	};
 
-	struct RenderData {
-		const int MAX_BRUSHES = 256;
+	static Ref<RenderAPI> s_Device;
+
+	struct RendererData {
+		Ref<TextureArray> Brushes;
+		Ref<StreamStorage> QuadStorage;
+		Ref<Shader> QuadShader;
 
 		uint32_t RenderWidth;
 		uint32_t RenderHeight;
-
-		std::shared_ptr<Shader> QuadShader;
-
-		//HShader QuadShader;
-
-		HTextureArray BrushTex;
-		std::queue<uint32_t> BrushTexLayers;
-		HandleStore<HBrush, uint32_t> Brushes;
-
-		std::unique_ptr<ManagedBuffer<QuadData>> QuadDataBuffer;
 	};
 
-	static RenderData s_Data;
+	static RendererData s_Data;
 
 	void Renderer2D::Init(uint32_t width, uint32_t height) {
 		EZ_PROFILE_FUNCTION();
@@ -49,24 +41,27 @@ namespace ez::gfx {
 		//Load Shader
 		s_Data.QuadShader = s_Device->CreateShader({ 
 			{Shader::Type::VERTEX,		ez::gfx::GL_QUAD_VERTEX_SHADER}, 
-			{Shader::Type::FRAGMENT,	ez::gfx::GL_QUAD_VERTEX_SHADER} 
+			{Shader::Type::FRAGMENT,	ez::gfx::GL_QUAD_FRAGMENT_SHADER} 
 		});
 		s_Data.QuadShader->Bind();
 
-		
-		s_Data.QuadDataBuffer = ManagedBuffer<QuadData>::Create(s_Device, MAX_QUADS);
+		s_Data.QuadStorage = s_Device->CreateStreamStorage(MAX_QUADS, sizeof(QuadData));
 
-		s_Data.BrushTex = s_Device->CreateTextureArray(2, 2, s_Data.MAX_BRUSHES, TextureFormat::RGBA, TextureFilter::LINEAR);
-		s_Device->BindTextureSlot(s_Data.BrushTex, 0);
-		s_Device->SetShaderUniform(s_Data.QuadShader, "uBrushTex", 0);
+		s_Data.Brushes = s_Device->CreateTextureArray(2, 2, Format::RGBA, Filter::LINEAR);
+		s_Data.Brushes->BindToSlot(0);
 
-		for (int i = 0; i < s_Data.MAX_BRUSHES; i++) {
-			s_Data.BrushTexLayers.push(i);
-		}
+		s_Data.QuadShader->Set("uBrushTex", 0);
+
+		EZ_CORE_DEBUG("Max Texture Array Layers: ", s_Data.Brushes->GetMaxLayers());
 
 		//Setup default state
 		s_Device->SetClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 		SetRenderSize(width, height);
+	}
+
+	void Renderer2D::Shutdown() {
+		EZ_PROFILE_FUNCTION();
+		EZ_CORE_DEBUG_DEALLOC("Shutting down Renderer2D");
 	}
 
 	void Renderer2D::SetRenderSize(uint32_t width, uint32_t height) {
@@ -94,24 +89,20 @@ namespace ez::gfx {
 		s_Data.QuadShader->Set("uView", view);
 	}
 
-	void Renderer2D::BeginScene() {
+	void Renderer2D::BeginFrame() {
 		EZ_PROFILE_FUNCTION();
-		s_Data.QuadDataBuffer->BeginScene();
+		s_Data.QuadStorage->BeginFrame();
 	}
 
-	void Renderer2D::EndScene() {
+	void Renderer2D::EndFrame() {
 		EZ_PROFILE_FUNCTION();
 		s_Device->Clear();
-		s_Device->DrawArrays(DrawMode::TRIANGLES, s_Data.QuadDataBuffer->GetCount() * 6, s_Data.QuadDataBuffer->GetOffset() * 6);
-		s_Data.QuadDataBuffer->EndScene();
+		s_Device->DrawArrays(DrawMode::TRIANGLES, s_Data.QuadStorage->Count() * 6, s_Data.QuadStorage->Offset() * 6);
+
+		s_Data.QuadStorage->EndFrame();
 	}
 
-	void Renderer2D::Shutdown() {
-		EZ_PROFILE_FUNCTION();
-		EZ_CORE_DEBUG_DEALLOC("Shutting down Renderer2D");
-	}
-
-	HBrush Renderer2D::CreateSolidColorBrush(const glm::vec4& color) {
+	Brush Renderer2D::CreateSolidColorBrush(const glm::vec4& color) {
 		uint8_t r = color.r * 255;
 		uint8_t g = color.g * 255;
 		uint8_t b = color.b * 255;
@@ -125,24 +116,28 @@ namespace ez::gfx {
 			r, g, b, a
 		};
 
-		uint32_t layer = s_Data.BrushTexLayers.front();
-		s_Data.BrushTexLayers.pop();
-		s_Device->UploadTexture(s_Data.BrushTex, layer, colorData);
 
-		return s_Data.Brushes.PushBack(layer);
+		Brush brush = Brush((int32_t)s_Data.Brushes->PushBack(colorData));
+		return brush;
 	}
 
-	void Renderer2D::DrawRect(HBrush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation) {
+	void Renderer2D::DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation) {
 		EZ_PROFILE_FUNCTION();
 
-		s_Data.QuadDataBuffer->PushBack(QuadData{
-			position.x, position.y, position.z, size.x, size.y, rotation.x, rotation.y, rotation.z, s_Data.Brushes.Get(brush), 0, 0, 0
-		});
+		QuadData data{
+			position.x, position.y, position.z, size.x, size.y, rotation.x, rotation.y, rotation.z, (int32_t)brush, 0, 0, 0
+		};
+
+		s_Data.QuadStorage->PushBack(&data);
 	}
 
-	void Renderer2D::DrawRect(HBrush brush, const glm::vec3& position, const glm::vec2& size) {
-		s_Data.QuadDataBuffer->PushBack(QuadData{
-			position.x, position.y, position.z, size.x, size.y, 0, 0, 0, s_Data.Brushes.Get(brush), 0, 0, 0
-		});
+	void Renderer2D::DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size) {
+		EZ_PROFILE_FUNCTION();
+
+		QuadData data {
+			position.x, position.y, position.z, size.x, size.y, 0, 0, 0, (int32_t)brush, 0, 0, 0
+		};
+
+		s_Data.QuadStorage->PushBack(&data);
 	}
 }

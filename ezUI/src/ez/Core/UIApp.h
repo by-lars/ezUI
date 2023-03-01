@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ez/Core/Base.h"
 #include <string>
 typedef struct GLFWwindow GLFWwindow;
 
@@ -11,7 +11,6 @@ namespace ez {
 			int Width;
 			int Height;
 		};
-
 
 		~UIApp();
 		static UIApp* Create(const UIApp::Specification& settings);

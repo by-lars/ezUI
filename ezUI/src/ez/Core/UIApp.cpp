@@ -8,8 +8,8 @@
 #include <glm/glm.hpp>
 
 namespace ez {
-	gfx::HBrush defaultBrush;
-	gfx::HBrush defaultBrush2;
+	gfx::Brush defaultBrush;
+	gfx::Brush defaultBrush2;
 
 
 	UIApp* UIApp::Create(const UIApp::Specification& settings) {
@@ -78,8 +78,8 @@ namespace ez {
 			frameRate += std::to_string((1 / delta));
 			glfwSetWindowTitle(m_Window, frameRate.c_str());
 
+			gfx::Renderer2D::BeginFrame();
 			gfx::Renderer2D::SetViewMatrix(glm::mat4(1.0f));
-			gfx::Renderer2D::BeginScene();
 			for (int i = 0; i < 100; i++) {
 				if (i % 2 == 0) {
 					gfx::Renderer2D::DrawRect(defaultBrush, glm::vec3(i*8, i*8, 0), glm::vec2(8, 8), glm::vec3(0));
@@ -89,7 +89,7 @@ namespace ez {
 
 				}
 			}
-			gfx::Renderer2D::EndScene();
+			gfx::Renderer2D::EndFrame();
 		
 			glfwSwapBuffers(m_Window);
 			lastFrameTime = currentFrameTime;

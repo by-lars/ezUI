@@ -1,7 +1,8 @@
 #pragma once
+#include <string>
 
 namespace ez::gfx {
-	constexpr char GL_QUAD_VERTEX_SHADER[] = R"(
+	const std::string GL_QUAD_VERTEX_SHADER = R"(
 		#version 450 core
 
 		struct InstanceData {
@@ -48,7 +49,7 @@ namespace ez::gfx {
 	)";
 
 
-	constexpr char GL_QUAD_FRAGMENT_SHADER[] = R"(
+	const std::string GL_QUAD_FRAGMENT_SHADER = R"(
 		#version 450 core
 
 		in		vec3			vTexCoords;

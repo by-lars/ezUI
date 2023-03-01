@@ -27,27 +27,14 @@ namespace ez::gfx {
 		return ez::CreateRef<GL_Shader>(shaders);
 	}
 
-	Ref<Storage> GL_API::CreateStreamStorage(uint32_t size) {
-		Ref<Storage> storage = ez::CreateRef<GL_MappedStreamBuffer>(GL_SHADER_STORAGE_BUFFER, size); 
-		m_StreamStorages.push_back(storage);
-		return storage;
+	Ref<StreamStorage> GL_API::CreateStreamStorage(uint32_t size, uint32_t stride) {
+		return ez::CreateRef<GL_MappedStreamBuffer>(GL_SHADER_STORAGE_BUFFER, size, stride);
 	}
 
 	Ref<TextureArray> GL_API::CreateTextureArray(uint32_t width, uint32_t height, Format format, Filter filter) {
 		return ez::CreateRef<GL_TextureArray>(width, height, format, filter);
 	}
 
-	void GL_API::BeginFrame() {
-		for (const auto& storage : m_StreamStorages) {
-			storage->Lock();
-		}
-	}
-
-	void GL_API::EndFrame() {
-		for (const auto& storage : m_StreamStorages) {
-			storage->Unlock();
-		}
-	}
 
 	void GL_API::SetClearColor(float r, float g, float b, float a) {
 		glClearColor(r, g, b, a);

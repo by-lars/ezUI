@@ -5,9 +5,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace ez::gfx {
-	static void CompileShader(GLint shader, const GLchar* source) {
-		glShaderSource(shader, 1, &source, 0);
+	static void CompileShader(GLint shader, const std::string& source) {
+		const GLchar* glSource = source.c_str();
+		glShaderSource(shader, 1, &glSource, 0);
 		glCompileShader(shader);
+
+		EZ_CORE_DEBUG("Shader Source (", shader, "): ",  source);
 
 		GLint success = false;
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
@@ -38,7 +41,7 @@ namespace ez::gfx {
 		
 		for (const auto& shader : shaders) {
 			GLuint id = glCreateShader(ShaderTypeToNative(shader.first));
-			CompileShader(id, shader.second.c_str());
+			CompileShader(id, shader.second);
 
 			glAttachShader(m_Program, id);
 		}

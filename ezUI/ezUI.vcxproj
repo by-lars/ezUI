@@ -116,11 +116,9 @@
     <ClCompile Include="src\ez\Build\GladBuild.cpp" />
     <ClCompile Include="src\ez\Build\StbBuild.cpp" />
     <ClCompile Include="src\ez\Core\Base.cpp" />
-    <ClCompile Include="src\ez\Core\GFXApp.cpp" />
     <ClCompile Include="src\ez\Core\UIApp.cpp" />
     <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.cpp" />
     <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_Shader.cpp" />
-    <ClCompile Include="src\ez\Graphics\Renderer\Font.cpp" />
     <ClCompile Include="src\ez\Graphics\API\RenderAPI.cpp" />
     <ClCompile Include="src\ez\Graphics\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_API.cpp" />
@@ -140,7 +138,6 @@
     <ClInclude Include="vendor\glfw\src\win32_time.h" />
     <ClInclude Include="include\Core\UIApp.h" />
     <ClInclude Include="include\ez\ez.hpp" />
-    <ClInclude Include="src\ez\Core\GFXApp.h" />
     <ClInclude Include="src\ez\Core\Base.h" />
     <ClInclude Include="src\ez\Build\BuildConfig.h" />
     <ClInclude Include="src\ez\Core\UIApp.h" />
@@ -149,7 +146,6 @@
     <ClInclude Include="src\ez\Graphics\API\DeviceResources.h" />
     <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.h" />
     <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_Shader.h" />
-    <ClInclude Include="src\ez\Graphics\Renderer\Font.h" />
     <ClInclude Include="src\ez\Graphics\Renderer\ManagedBuffer.h" />
     <ClInclude Include="src\ez\Graphics\UI\Scene.h" />
     <ClInclude Include="src\ez\Core\StrongHandle.h" />

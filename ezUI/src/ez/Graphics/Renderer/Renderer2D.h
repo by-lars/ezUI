@@ -1,5 +1,9 @@
 #pragma once
+#include "ez/Core/Base.h"
 #include "ez/Core/StrongHandle.h"
+#include "ez/Graphics/API/RenderAPI.h"
+#include "ez/Graphics/API/DeviceResources.h"
+
 #include <glm/glm.hpp>
 
 namespace ez::gfx {
@@ -8,21 +12,18 @@ namespace ez::gfx {
 
 	class Renderer2D {
 	public:
-		Renderer2D(uint32_t width, uint32_t height);
-		~Renderer2D();
+		static void Init(uint32_t width, uint32_t height);
+		static void Shutdown();
 
-		void SetViewMatrix(const glm::mat4& matrix);
-		void SetRenderSize(uint32_t width, uint32_t height);
+		static void SetViewMatrix(const glm::mat4& matrix);
+		static void SetRenderSize(uint32_t width, uint32_t height);
 
-		void BeginScene();
-		void EndScene();
+		static void BeginFrame();
+		static void EndFrame();
 
-		Brush CreateSolidColorBrush(const glm::vec4& color);
+		static Brush CreateSolidColorBrush(const glm::vec4& color);
 
-		void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
-		void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size);
-
-	private:
-
+		static void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
+		static void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size);
 	};
 }
