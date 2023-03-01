@@ -1,10 +1,10 @@
 #include "Renderer2D.h"
-#include "Core/Base.h"
-#include "Graphics/RenderAPI.h"
-#include "Graphics/BuiltinShader.h"
-#include "Graphics/ManagedBuffer.h"
-#include "Debug/Profiling.h"
-#include "Core/HandleStore.h"
+#include "ez/Core/Base.h"
+#include "ez/Core/Profiling.h"
+#include "ez/Core/StrongHandle.h"
+
+#include "ez/Graphics/API/RenderAPI.h"
+#include "ez/Graphics/API/OpenGL/GL_BuiltinShader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -28,8 +28,9 @@ namespace ez::gfx {
 		uint32_t RenderWidth;
 		uint32_t RenderHeight;
 
-		HShader QuadShader;
-		HBuffer QuadBuffer;
+		std::shared_ptr<Shader> QuadShader;
+
+		//HShader QuadShader;
 
 		HTextureArray BrushTex;
 		std::queue<uint32_t> BrushTexLayers;
@@ -43,12 +44,16 @@ namespace ez::gfx {
 	void Renderer2D::Init(uint32_t width, uint32_t height) {
 		EZ_PROFILE_FUNCTION();
 		EZ_CORE_DEBUG_ALLOC("Initializing Renderer2D");
-		s_Device = RenderAPI::Create();
+		s_Device = RenderAPI::Create(ez::gfx::API::OPENGL);
 
 		//Load Shader
-		s_Data.QuadShader = s_Device->CreateShader(ez::gfx::DEFAULT_VERTEX_SHADER, ez::gfx::DEFAULT_FRAGMENT_SHADER);
-		s_Device->BindShader(s_Data.QuadShader);
+		s_Data.QuadShader = s_Device->CreateShader({ 
+			{Shader::Type::VERTEX,		ez::gfx::GL_QUAD_VERTEX_SHADER}, 
+			{Shader::Type::FRAGMENT,	ez::gfx::GL_QUAD_VERTEX_SHADER} 
+		});
+		s_Data.QuadShader->Bind();
 
+		
 		s_Data.QuadDataBuffer = ManagedBuffer<QuadData>::Create(s_Device, MAX_QUADS);
 
 		s_Data.BrushTex = s_Device->CreateTextureArray(2, 2, s_Data.MAX_BRUSHES, TextureFormat::RGBA, TextureFilter::LINEAR);
@@ -75,8 +80,8 @@ namespace ez::gfx {
 		float depthZ = (-1.0f * s_Data.RenderHeight) / (2.0f * tanf(fovy / 2.0f));
 		glm::mat4 proj = glm::perspective(fovy, aspect, 1.0f, s_Data.RenderHeight * 2.0f);
 
-		s_Device->SetShaderUniform(s_Data.QuadShader, "uProj", proj);
-		s_Device->SetShaderUniform(s_Data.QuadShader, "uOffset", depthZ);
+		s_Data.QuadShader->Set("uProj", proj);
+		s_Data.QuadShader->Set("uOffset", depthZ);
 
 		s_Device->SetViewport(0, 0, width, height);
 	}
@@ -86,7 +91,7 @@ namespace ez::gfx {
 		glm::mat4 view(1.0f);
 		view = glm::translate(view, glm::vec3(-0.5f * s_Data.RenderWidth, 0.5f * s_Data.RenderHeight, 0.0f));
 		view = glm::scale(view, glm::vec3(1.0f, -1.0f, 1.0f));
-		s_Device->SetShaderUniform(s_Data.QuadShader, "uView", view);
+		s_Data.QuadShader->Set("uView", view);
 	}
 
 	void Renderer2D::BeginScene() {
@@ -107,13 +112,13 @@ namespace ez::gfx {
 	}
 
 	HBrush Renderer2D::CreateSolidColorBrush(const glm::vec4& color) {
-		GLubyte r = color.r * 255;
-		GLubyte g = color.g * 255;
-		GLubyte b = color.b * 255;
-		GLubyte a = color.a * 255;
+		uint8_t r = color.r * 255;
+		uint8_t g = color.g * 255;
+		uint8_t b = color.b * 255;
+		uint8_t a = color.a * 255;
 
 
-		GLubyte colorData[]{
+		uint8_t colorData[]{
 			r, g, b, a,
 			r, g, b, a,
 			r, g, b, a,
@@ -132,12 +137,12 @@ namespace ez::gfx {
 
 		s_Data.QuadDataBuffer->PushBack(QuadData{
 			position.x, position.y, position.z, size.x, size.y, rotation.x, rotation.y, rotation.z, s_Data.Brushes.Get(brush), 0, 0, 0
-			});
+		});
 	}
 
 	void Renderer2D::DrawRect(HBrush brush, const glm::vec3& position, const glm::vec2& size) {
 		s_Data.QuadDataBuffer->PushBack(QuadData{
 			position.x, position.y, position.z, size.x, size.y, 0, 0, 0, s_Data.Brushes.Get(brush), 0, 0, 0
-			});
+		});
 	}
 }

@@ -1,7 +1,7 @@
-#include "Core/UIApp.h"
-#include "Core/Base.h"
-#include "Graphics/Renderer2D.h"
-#include "Debug/Profiling.h"
+#include "ez/Core/UIApp.h"
+#include "ez/Core/Base.h"
+#include "ez/Core/Profiling.h"
+#include "ez/Graphics/Renderer/Renderer2D.h"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
@@ -50,8 +50,6 @@ namespace ez {
 
 		defaultBrush = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(1.0, 1.0, 1.0, 1.0));
 		defaultBrush2 = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(0.0, 1.0, 1.0, 1.0));
-
-
 
 
 		EZ_PROFILE_END_SESSION();

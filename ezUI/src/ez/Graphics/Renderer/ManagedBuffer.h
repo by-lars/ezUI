@@ -1,7 +1,7 @@
 #pragma once
-#include "Graphics/RenderAPI.h"
-#include "Graphics/DeviceResources.h"
-#include "Core/Base.h"
+#include "ez/Graphics/RenderAPI.h"
+#include "ez/Graphics/DeviceResources.h"
+#include "ez/Core/Base.h"
 
 #include <memory>
 #include <queue>

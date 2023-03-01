@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "ezUI.h"
+#include "ez/ez.h"
 
 int main() {
     ez::UIApp::Specification settings;

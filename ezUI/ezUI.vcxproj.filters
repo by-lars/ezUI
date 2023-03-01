@@ -15,172 +15,211 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ext\glfw\src\context.c">
+    <ClCompile Include="vendor\glfw\src\context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\init.c">
+    <ClCompile Include="vendor\glfw\src\init.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\input.c">
+    <ClCompile Include="vendor\glfw\src\input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\monitor.c">
+    <ClCompile Include="vendor\glfw\src\monitor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\window.c">
+    <ClCompile Include="vendor\glfw\src\window.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_window.c">
+    <ClCompile Include="vendor\glfw\src\win32_window.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_init.c">
+    <ClCompile Include="vendor\glfw\src\win32_init.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_joystick.c">
+    <ClCompile Include="vendor\glfw\src\win32_joystick.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_module.c">
+    <ClCompile Include="vendor\glfw\src\win32_module.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_monitor.c">
+    <ClCompile Include="vendor\glfw\src\win32_monitor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_thread.c">
+    <ClCompile Include="vendor\glfw\src\win32_thread.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\win32_time.c">
+    <ClCompile Include="vendor\glfw\src\win32_time.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\wgl_context.c">
+    <ClCompile Include="vendor\glfw\src\wgl_context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\vulkan.c">
+    <ClCompile Include="vendor\glfw\src\vulkan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\platform.c">
+    <ClCompile Include="vendor\glfw\src\platform.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\egl_context.c">
+    <ClCompile Include="vendor\glfw\src\egl_context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\osmesa_context.c">
+    <ClCompile Include="vendor\glfw\src\osmesa_context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\null_window.c">
+    <ClCompile Include="vendor\glfw\src\null_window.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\null_init.c">
+    <ClCompile Include="vendor\glfw\src\null_init.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\null_joystick.c">
+    <ClCompile Include="vendor\glfw\src\null_joystick.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ext\glfw\src\null_monitor.c">
+    <ClCompile Include="vendor\glfw\src\null_monitor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\UIApp.cpp">
+    <ClCompile Include="src\ez\Core\UIApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Build\GladBuild.cpp">
+    <ClCompile Include="src\ez\Build\GladBuild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Base.cpp">
+    <ClCompile Include="src\ez\Core\Base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Renderer2D.cpp">
+    <ClCompile Include="src\ez\Graphics\Renderer\Renderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\RenderAPI.cpp">
+    <ClCompile Include="src\ez\Graphics\API\RenderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\Profiling.cpp">
+    <ClCompile Include="src\ez\Core\Profiling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLAPI.cpp">
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GFXApp.cpp">
+    <ClCompile Include="src\ez\Core\GFXApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Graphics\Renderer\Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Build\StbBuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_DebugOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_TextureArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ext\glfw\src\internal.h">
+    <ClInclude Include="vendor\glfw\src\internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\mappings.h">
+    <ClInclude Include="vendor\glfw\src\mappings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\win32_joystick.h">
+    <ClInclude Include="vendor\glfw\src\win32_joystick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\win32_platform.h">
+    <ClInclude Include="vendor\glfw\src\win32_platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\win32_thread.h">
+    <ClInclude Include="vendor\glfw\src\win32_thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\win32_time.h">
+    <ClInclude Include="vendor\glfw\src\win32_time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\platform.h">
+    <ClInclude Include="vendor\glfw\src\platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\null_joystick.h">
+    <ClInclude Include="vendor\glfw\src\null_joystick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ext\glfw\src\null_platform.h">
+    <ClInclude Include="vendor\glfw\src\null_platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\UIApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\UIApp.h">
+    <ClInclude Include="src\ez\Core\UIApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Base.h">
+    <ClInclude Include="src\ez\Core\Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\Renderer2D.h">
+    <ClInclude Include="src\ez\Graphics\Renderer\Renderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\RenderAPI.h">
+    <ClInclude Include="src\ez\Graphics\API\RenderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\BuiltinShader.h">
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_BuiltinShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\DeviceResources.h">
+    <ClInclude Include="src\ez\Build\BuildConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\StrongHandle.h">
+    <ClInclude Include="src\Graphics\API\ManagedBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Build\BuildConfig.h">
+    <ClInclude Include="src\ez\Core\Profiling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\ManagedBuffer.h">
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug\Profiling.h">
+    <ClInclude Include="src\ez\Core\GFXApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLAPI.h">
+    <ClInclude Include="src\ez\Core\StrongHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\GFXApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\HandleStore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\Scene.h">
+    <ClInclude Include="src\ez\Graphics\UI\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ezUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ez\Graphics\Renderer\Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\API\DeviceResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ez\ez.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\ez.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\Renderer\ManagedBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_DebugOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_TextureArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ext\glfw\src\mappings.h.in" />
+    <None Include="vendor\glfw\src\mappings.h.in" />
   </ItemGroup>
 </Project>

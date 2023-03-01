@@ -1,5 +1,5 @@
-#include "Debug/Profiling.h"
-#include "Core/Base.h"
+#include "ez/Core/Base.h"
+#include "ez/Core/Profiling.h"
 #include <GLFW/glfw3.h>
 #include <iomanip>
 

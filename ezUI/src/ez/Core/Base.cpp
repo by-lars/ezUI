@@ -1,4 +1,4 @@
-#include "Core/Base.h"
+#include "ez/Core/Base.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -8,7 +8,7 @@ namespace ez {
 #if EZ_BUILD_DEBUG_MODE
 	Logger::Level Logger::s_CurrentLevel = Logger::Level::DEALLOC;
 #else
-	LogLevel Logger::s_CurrentLevel = LogLevel::LOG;
+	Logger::Level Logger::s_CurrentLevel = Logger::Level::LOG;
 #endif
 
 	void Logger::SetLevel(Logger::Level level) {

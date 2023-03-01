@@ -4,3 +4,6 @@
 [submodule "ezUI/ext/glfw"]
 	path = ezUI/ext/glfw
 	url = https://github.com/glfw/glfw
+[submodule "ezUI/ext/stb/stb"]
+	path = ezUI/ext/stb/stb
+	url = https://github.com/nothings/stb

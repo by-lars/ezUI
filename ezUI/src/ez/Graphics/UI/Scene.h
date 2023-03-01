@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ez::ui {
+namespace ez::gfx {
 	class Scene {
 			
 	};

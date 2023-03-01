@@ -1,5 +1,5 @@
 #pragma once
-#include "Build/BuildConfig.h"
+#include "ez/Build/BuildConfig.h"
 #include <string>
 #include <fstream>
 

@@ -47,13 +47,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)build\$(Platform)-$(Configuration)\lib\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)-$(Configuration)\objects\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)ext\glfw\include;$(ProjectDir)ext\glad;$(ProjectDir)ext\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)vendor\glfw\include;$(ProjectDir)vendor\glad;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build\$(Platform)-$(Configuration)\lib\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)-$(Configuration)\objects\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)ext\glfw\include;$(ProjectDir)ext\glad;$(ProjectDir)ext\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)ext\glfw\include;$(ProjectDir)ext\glad;$(ProjectDir)ext\glm;$(ProjectDir)ext\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -90,65 +90,78 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ext\glfw\src\context.c" />
-    <ClCompile Include="ext\glfw\src\egl_context.c" />
-    <ClCompile Include="ext\glfw\src\init.c" />
-    <ClCompile Include="ext\glfw\src\input.c" />
-    <ClCompile Include="ext\glfw\src\monitor.c" />
-    <ClCompile Include="ext\glfw\src\null_init.c" />
-    <ClCompile Include="ext\glfw\src\null_joystick.c" />
-    <ClCompile Include="ext\glfw\src\null_monitor.c" />
-    <ClCompile Include="ext\glfw\src\null_window.c" />
-    <ClCompile Include="ext\glfw\src\osmesa_context.c" />
-    <ClCompile Include="ext\glfw\src\platform.c" />
-    <ClCompile Include="ext\glfw\src\vulkan.c" />
-    <ClCompile Include="ext\glfw\src\wgl_context.c" />
-    <ClCompile Include="ext\glfw\src\win32_init.c" />
-    <ClCompile Include="ext\glfw\src\win32_joystick.c" />
-    <ClCompile Include="ext\glfw\src\win32_module.c" />
-    <ClCompile Include="ext\glfw\src\win32_monitor.c" />
-    <ClCompile Include="ext\glfw\src\win32_thread.c" />
-    <ClCompile Include="ext\glfw\src\win32_time.c" />
-    <ClCompile Include="ext\glfw\src\win32_window.c" />
-    <ClCompile Include="ext\glfw\src\window.c" />
-    <ClCompile Include="src\Build\GladBuild.cpp" />
-    <ClCompile Include="src\Core\Base.cpp" />
-    <ClCompile Include="src\Core\GFXApp.cpp" />
-    <ClCompile Include="src\Core\UIApp.cpp" />
-    <ClCompile Include="src\Graphics\RenderAPI.cpp" />
-    <ClCompile Include="src\Graphics\Renderer2D.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLAPI.cpp" />
-    <ClCompile Include="src\Debug\Profiling.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_DebugOutput.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_TextureArray.cpp" />
+    <ClCompile Include="vendor\glfw\src\context.c" />
+    <ClCompile Include="vendor\glfw\src\egl_context.c" />
+    <ClCompile Include="vendor\glfw\src\init.c" />
+    <ClCompile Include="vendor\glfw\src\input.c" />
+    <ClCompile Include="vendor\glfw\src\monitor.c" />
+    <ClCompile Include="vendor\glfw\src\null_init.c" />
+    <ClCompile Include="vendor\glfw\src\null_joystick.c" />
+    <ClCompile Include="vendor\glfw\src\null_monitor.c" />
+    <ClCompile Include="vendor\glfw\src\null_window.c" />
+    <ClCompile Include="vendor\glfw\src\osmesa_context.c" />
+    <ClCompile Include="vendor\glfw\src\platform.c" />
+    <ClCompile Include="vendor\glfw\src\vulkan.c" />
+    <ClCompile Include="vendor\glfw\src\wgl_context.c" />
+    <ClCompile Include="vendor\glfw\src\win32_init.c" />
+    <ClCompile Include="vendor\glfw\src\win32_joystick.c" />
+    <ClCompile Include="vendor\glfw\src\win32_module.c" />
+    <ClCompile Include="vendor\glfw\src\win32_monitor.c" />
+    <ClCompile Include="vendor\glfw\src\win32_thread.c" />
+    <ClCompile Include="vendor\glfw\src\win32_time.c" />
+    <ClCompile Include="vendor\glfw\src\win32_window.c" />
+    <ClCompile Include="vendor\glfw\src\window.c" />
+    <ClCompile Include="src\ez\Build\GladBuild.cpp" />
+    <ClCompile Include="src\ez\Build\StbBuild.cpp" />
+    <ClCompile Include="src\ez\Core\Base.cpp" />
+    <ClCompile Include="src\ez\Core\GFXApp.cpp" />
+    <ClCompile Include="src\ez\Core\UIApp.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_Shader.cpp" />
+    <ClCompile Include="src\ez\Graphics\Renderer\Font.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\RenderAPI.cpp" />
+    <ClCompile Include="src\ez\Graphics\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\ez\Graphics\API\OpenGL\GL_API.cpp" />
+    <ClCompile Include="src\ez\Core\Profiling.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ext\glfw\src\internal.h" />
-    <ClInclude Include="ext\glfw\src\mappings.h" />
-    <ClInclude Include="ext\glfw\src\null_joystick.h" />
-    <ClInclude Include="ext\glfw\src\null_platform.h" />
-    <ClInclude Include="ext\glfw\src\platform.h" />
-    <ClInclude Include="ext\glfw\src\win32_joystick.h" />
-    <ClInclude Include="ext\glfw\src\win32_platform.h" />
-    <ClInclude Include="ext\glfw\src\win32_thread.h" />
-    <ClInclude Include="ext\glfw\src\win32_time.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_DebugOutput.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_TextureArray.h" />
+    <ClInclude Include="vendor\glfw\src\internal.h" />
+    <ClInclude Include="vendor\glfw\src\mappings.h" />
+    <ClInclude Include="vendor\glfw\src\null_joystick.h" />
+    <ClInclude Include="vendor\glfw\src\null_platform.h" />
+    <ClInclude Include="vendor\glfw\src\platform.h" />
+    <ClInclude Include="vendor\glfw\src\win32_joystick.h" />
+    <ClInclude Include="vendor\glfw\src\win32_platform.h" />
+    <ClInclude Include="vendor\glfw\src\win32_thread.h" />
+    <ClInclude Include="vendor\glfw\src\win32_time.h" />
     <ClInclude Include="include\Core\UIApp.h" />
-    <ClInclude Include="src\Core\GFXApp.h" />
-    <ClInclude Include="src\Core\Base.h" />
-    <ClInclude Include="src\Build\BuildConfig.h" />
-    <ClInclude Include="src\Core\UIApp.h" />
+    <ClInclude Include="include\ez\ez.hpp" />
+    <ClInclude Include="src\ez\Core\GFXApp.h" />
+    <ClInclude Include="src\ez\Core\Base.h" />
+    <ClInclude Include="src\ez\Build\BuildConfig.h" />
+    <ClInclude Include="src\ez\Core\UIApp.h" />
+    <ClInclude Include="src\ez\ez.h" />
     <ClInclude Include="src\ezUI.h" />
-    <ClInclude Include="src\UI\Scene.h" />
-    <ClInclude Include="src\Core\HandleStore.h" />
-    <ClInclude Include="src\Core\StrongHandle.h" />
-    <ClInclude Include="src\Graphics\BuiltinShader.h" />
-    <ClInclude Include="src\Graphics\DeviceResources.h" />
-    <ClInclude Include="src\Graphics\RenderAPI.h" />
-    <ClInclude Include="src\Graphics\Renderer2D.h" />
-    <ClInclude Include="src\Graphics\ManagedBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLAPI.h" />
-    <ClInclude Include="src\Debug\Profiling.h" />
+    <ClInclude Include="src\ez\Graphics\API\DeviceResources.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_MappedStreamBuffer.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_Shader.h" />
+    <ClInclude Include="src\ez\Graphics\Renderer\Font.h" />
+    <ClInclude Include="src\ez\Graphics\Renderer\ManagedBuffer.h" />
+    <ClInclude Include="src\ez\Graphics\UI\Scene.h" />
+    <ClInclude Include="src\ez\Core\StrongHandle.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_BuiltinShader.h" />
+    <ClInclude Include="src\ez\Graphics\API\RenderAPI.h" />
+    <ClInclude Include="src\ez\Graphics\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\Graphics\API\ManagedBuffer.h" />
+    <ClInclude Include="src\ez\Graphics\API\OpenGL\GL_API.h" />
+    <ClInclude Include="src\ez\Core\Profiling.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ext\glfw\src\mappings.h.in" />
+    <None Include="vendor\glfw\src\mappings.h.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
