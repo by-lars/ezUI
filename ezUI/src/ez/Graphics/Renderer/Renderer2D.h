@@ -21,7 +21,8 @@ namespace ez::gfx {
 		static void BeginFrame();
 		static void EndFrame();
 
-		static Brush CreateSolidColorBrush(const glm::vec4& color);
+		static Brush CreateSolidColorBrush(glm::vec4 color);
+		static Brush CreateGradientBrush(glm::vec4 color1, glm::vec4 color2);
 
 		static void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
 		static void DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size);

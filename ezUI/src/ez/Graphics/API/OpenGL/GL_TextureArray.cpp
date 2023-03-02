@@ -91,6 +91,11 @@ namespace ez::gfx {
 	}
 
 	Layer GL_TextureArray::PushBack(void* data) {
+		if (m_FreeLayers.empty()) {
+			EZ_CORE_WARN("TextureArray is full! Can't push new layers.");
+			return Layer(0);
+		}
+
 		Layer layer = m_FreeLayers.front();
 		m_FreeLayers.pop();
 		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, (GLint)layer, m_Width, m_Height, 1, m_Format, GL_UNSIGNED_BYTE, data);

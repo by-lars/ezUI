@@ -10,7 +10,9 @@
 namespace ez {
 	gfx::Brush defaultBrush;
 	gfx::Brush defaultBrush2;
+	gfx::Brush gradientBrush;
 
+	std::vector<gfx::Brush> brushes;
 
 	UIApp* UIApp::Create(const UIApp::Specification& settings) {
 		return new UIApp(settings);
@@ -51,6 +53,11 @@ namespace ez {
 		defaultBrush = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(1.0, 1.0, 1.0, 1.0));
 		defaultBrush2 = gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(0.0, 1.0, 1.0, 1.0));
 
+		gradientBrush = gfx::Renderer2D::CreateGradientBrush(glm::vec4(0.98f, 0.18f, 0.63f, 1.0f), glm::vec4(0.94f, 0.24f, 0.3f, 1.0f));
+			 
+		for (int i = 0; i < 2048; i++) {
+			brushes.push_back(gfx::Renderer2D::CreateSolidColorBrush(glm::vec4(rand(), rand(), rand(), 1.0f)));
+		}
 
 		EZ_PROFILE_END_SESSION();
 	}
@@ -80,17 +87,16 @@ namespace ez {
 
 			gfx::Renderer2D::BeginFrame();
 			gfx::Renderer2D::SetViewMatrix(glm::mat4(1.0f));
-			for (int i = 0; i < 100; i++) {
-				if (i % 2 == 0) {
-					gfx::Renderer2D::DrawRect(defaultBrush, glm::vec3(i*8, i*8, 0), glm::vec2(8, 8), glm::vec3(0));
-				}
-				else {
-					gfx::Renderer2D::DrawRect(defaultBrush2, glm::vec3(i*8, i * 8, 0), glm::vec2(8, 8), glm::vec3(0));
-
+			
+			for (int x = 0; x < 500; x++) {
+				for (int y = 0; y < 300; y++) {
+					gfx::Renderer2D::DrawRect(brushes[(x+y) % 1024], glm::vec3(x * 4 + 4, y * 4 + 4, sin(x+y+currentFrameTime*10) * 4), glm::vec2(4,4), glm::vec3(0));
 				}
 			}
+
 			gfx::Renderer2D::EndFrame();
 		
+
 			glfwSwapBuffers(m_Window);
 			lastFrameTime = currentFrameTime;
 		}

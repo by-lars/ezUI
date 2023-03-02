@@ -53,7 +53,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build\$(Platform)-$(Configuration)\lib\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)-$(Configuration)\objects\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)ext\glfw\include;$(ProjectDir)ext\glad;$(ProjectDir)ext\glm;$(ProjectDir)ext\stb;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)vendor\glfw\include;$(ProjectDir)vendor\glad;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

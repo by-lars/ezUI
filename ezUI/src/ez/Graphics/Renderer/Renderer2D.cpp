@@ -13,7 +13,7 @@
 #include <queue>
 
 namespace ez::gfx {
-	constexpr int MAX_QUADS = 20000;
+	constexpr int MAX_QUADS = 1000000;//20000;
 
 	struct QuadData {
 		float Data[8];
@@ -98,28 +98,36 @@ namespace ez::gfx {
 		EZ_PROFILE_FUNCTION();
 		s_Device->Clear();
 		s_Device->DrawArrays(DrawMode::TRIANGLES, s_Data.QuadStorage->Count() * 6, s_Data.QuadStorage->Offset() * 6);
-
 		s_Data.QuadStorage->EndFrame();
 	}
 
-	Brush Renderer2D::CreateSolidColorBrush(const glm::vec4& color) {
-		uint8_t r = color.r * 255;
-		uint8_t g = color.g * 255;
-		uint8_t b = color.b * 255;
-		uint8_t a = color.a * 255;
-
+	Brush Renderer2D::CreateSolidColorBrush(glm::vec4 color) {
+		color *= 255.0f;
 
 		uint8_t colorData[]{
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a
+			color.r, color.g, color.b, color.a,
+			color.r, color.g, color.b, color.a,
+			color.r, color.g, color.b, color.a,
+			color.r, color.g, color.b, color.a,
 		};
 
-
-		Brush brush = Brush((int32_t)s_Data.Brushes->PushBack(colorData));
-		return brush;
+		return Brush((int32_t)s_Data.Brushes->PushBack(colorData));
 	}
+
+	Brush Renderer2D::CreateGradientBrush(glm::vec4 color1, glm::vec4 color2) {
+		color1 *= 255.0f;
+		color2 *= 255.0f;
+
+		uint8_t colorData[]{
+			color1.r, color1.g, color1.b, color1.a,
+			color1.r, color1.g, color1.b, color1.a,
+			color2.r, color2.g, color2.b, color2.a,
+			color2.r, color2.g, color2.b, color2.a,
+		};
+
+		return Brush((int32_t)s_Data.Brushes->PushBack(colorData));
+	}
+
 
 	void Renderer2D::DrawRect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation) {
 		EZ_PROFILE_FUNCTION();
