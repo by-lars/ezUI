@@ -1,5 +1,5 @@
-#include "ez/Core/Base.h"
-#include "ez/Graphics/API/RenderAPI.h"
+#include "ez/Core/Base.hpp"
+#include "ez/Graphics/API/RenderAPI.hpp"
 
 #include "ez/Graphics/API/OpenGL/GL_API.h"
 
@@ -11,7 +11,7 @@ namespace ez::gfx {
 				return nullptr;
 
 			case gfx::API::OPENGL: 
-				return ez::CreateRef<GL_API>();  
+				return ez::create_ref<GL_API>();
 
 			default: 
 				EZ_CORE_FATAL_ERROR("Unknown RenderAPI.");

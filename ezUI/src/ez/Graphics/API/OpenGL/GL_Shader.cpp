@@ -1,4 +1,4 @@
-#include "ez/Core/Base.h"
+#include "ez/Core/Base.hpp"
 #include "ez/Graphics/API/OpenGL/GL_Shader.h"
 
 #include <glad/gl.h>

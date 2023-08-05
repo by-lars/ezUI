@@ -1,5 +1,5 @@
 #pragma once
-#include "ez/Graphics/API/DeviceResources.h"
+#include "ez/Graphics/API/DeviceResources.hpp"
 #include <glad/gl.h>
 
 namespace ez::gfx {
@@ -20,6 +20,7 @@ namespace ez::gfx {
 		GLuint m_Height;
 		GLenum m_Format;
 		GLint m_MaxLayers;
+		GLuint m_NextLayer;
 
 		std::queue<Layer> m_FreeLayers;
 	};

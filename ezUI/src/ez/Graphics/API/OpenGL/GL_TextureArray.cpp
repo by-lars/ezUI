@@ -1,5 +1,5 @@
 #include "ez/Graphics/API/OpenGL/GL_TextureArray.h"
-#include "ez/Core/Base.h"
+#include "ez/Core/Base.hpp"
 
 #include <glad/gl.h>
 
@@ -55,6 +55,7 @@ namespace ez::gfx {
 		m_Height = height;
 		m_Format = nativeFormat;
 		m_MaxLayers = 0;
+		m_NextLayer = 0;
 		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &m_MaxLayers);
 
 		glGenTextures(1, &m_Texture);
@@ -67,10 +68,6 @@ namespace ez::gfx {
 
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, nativeFilter);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, nativeFilter);
-
-		for (int i = 0; i < m_MaxLayers; i++) {
-			m_FreeLayers.push(Layer(i));
-		}
 	}
 
 	GL_TextureArray::~GL_TextureArray() {
@@ -86,18 +83,24 @@ namespace ez::gfx {
 	}
 
 	void GL_TextureArray::BindToSlot(uint32_t slot) {
+		EZ_CORE_ASSERT(slot > 0, "Slot must be grater than 0");
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
+		glActiveTexture(GL_TEXTURE0);
 	}
 
 	Layer GL_TextureArray::PushBack(void* data) {
+		Layer layer;
 		if (m_FreeLayers.empty()) {
-			EZ_CORE_WARN("TextureArray is full! Can't push new layers.");
-			return Layer(0);
+			layer = Layer(m_NextLayer);
+			m_NextLayer++;
+		}
+		else {
+			layer = m_FreeLayers.front();
+			m_FreeLayers.pop();
 		}
 
-		Layer layer = m_FreeLayers.front();
-		m_FreeLayers.pop();
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
 		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, (GLint)layer, m_Width, m_Height, 1, m_Format, GL_UNSIGNED_BYTE, data);
 		return layer;	
 	}
@@ -125,8 +128,8 @@ namespace ez::gfx {
 	//	m_Textures.push_back(GLTexture{
 	//		.Id = tex,
 	//		.Format = nativeFormat,
-	//		.Width = width,
-	//		.Height = height
+	//		.width = width,
+	//		.height = height
 	//		});
 
 	//	return HTexture(m_Textures.size() - 1);
@@ -136,12 +139,12 @@ namespace ez::gfx {
 	//void OpenGLAPI::UploadTexture(HTexture hTexture, void* data) {
 	//	GLTexture tex = m_Textures[(int)hTexture];
 	//	glBindTexture(GL_TEXTURE_2D, tex.Id);
-	//	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, tex.Width, tex.Height, tex.Format, GL_UNSIGNED_BYTE, data);
+	//	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, tex.width, tex.height, tex.Format, GL_UNSIGNED_BYTE, data);
 	//}
 
 	//void OpenGLAPI::UploadTexture(HTextureArray hTexture, uint32_t layer, void* data) {
 	//	GLTextureArray tex = m_TextureArrays[(int)hTexture];
 	//	glBindTexture(GL_TEXTURE_2D_ARRAY, tex.Id);
-	//	glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, layer, tex.Width, tex.Height, 1, tex.Format, GL_UNSIGNED_BYTE, data);
+	//	glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, layer, tex.width, tex.height, 1, tex.Format, GL_UNSIGNED_BYTE, data);
 	//}
 }

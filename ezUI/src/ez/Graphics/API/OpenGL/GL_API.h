@@ -1,5 +1,5 @@
 #pragma once
-#include "ez/Graphics/API/RenderAPI.h"
+#include "ez/Graphics/API/RenderAPI.hpp"
 
 namespace ez::gfx {
 	class GL_API : public RenderAPI {

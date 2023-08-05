@@ -1,6 +1,7 @@
 #include "ez/Graphics/API/OpenGL/GL_MappedStreamBuffer.h"
 
 #include <glad/gl.h>
+#include <cstring>
 
 namespace ez::gfx {
 	GL_MappedStreamBuffer::GL_MappedStreamBuffer(GLenum bufferType, uint32_t count, uint32_t stride) {
@@ -36,8 +37,7 @@ namespace ez::gfx {
 
 	void GL_MappedStreamBuffer::PushBack(void* data) {
 		void* location = m_Data + m_Offset * m_Stride + m_Count * m_Stride;
-
-		memcpy(location, data, m_Stride);
+		std::memcpy(location, data, m_Stride);
 		m_Count++;
 	}
 

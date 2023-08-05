@@ -1,5 +1,5 @@
 #include "ez/Graphics/API/OpenGL/GL_DebugOutput.h"
-#include "ez/Core/Base.h"
+#include "ez/Core/Base.hpp"
 
 void ez::gfx::GL_SetupDebugOutput() {
 	const GLubyte* oglVersion = glGetString(GL_VERSION);
@@ -18,19 +18,19 @@ void ez::gfx::GL_SetupDebugOutput() {
 void ez::gfx::GL_DebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam) {
 	switch (severity) {
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
-		ez::Logger::Log(ez::Logger::Sender::API_OGL, ez::Logger::Level::API, "[NOTIFICTION] ", message);
+		ez::Logger::log(ez::Logger::Sender::API_OGL, ez::Logger::Level::LOG, "[NOTIFICTION] ", message);
 		break;
 
 	case GL_DEBUG_SEVERITY_LOW:
-		ez::Logger::Log(ez::Logger::Sender::API_OGL, ez::Logger::Level::API, "[LOW] ", message);
+		ez::Logger::log(ez::Logger::Sender::API_OGL, ez::Logger::Level::LOG, "[LOW] ", message);
 		break;
 
 	case GL_DEBUG_SEVERITY_MEDIUM:
-		ez::Logger::Log(ez::Logger::Sender::API_OGL, ez::Logger::Level::WARNING, "[MEDIUM] ", message);
+		ez::Logger::log(ez::Logger::Sender::API_OGL, ez::Logger::Level::WARNING, "[MEDIUM] ", message);
 		break;
 
 	case GL_DEBUG_SEVERITY_HIGH:
-		ez::Logger::Log(ez::Logger::Sender::API_OGL, ez::Logger::Level::ERROR, "[ERROR] ", message);
+		ez::Logger::log(ez::Logger::Sender::API_OGL, ez::Logger::Level::ERROR, "[ERROR] ", message);
 		break;
 	}
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "ez/Graphics/API/DeviceResources.h"
+#include "ez/Graphics/API/DeviceResources.hpp"
 
 namespace ez::gfx {
 	class GL_Shader : public Shader {

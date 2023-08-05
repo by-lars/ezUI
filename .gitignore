@@ -1,3 +1,2 @@
-.vs
+cmake-build-debug
 build
-UnitTests/x64

@@ -1,4 +1,4 @@
-#include "ez/Core/Base.h"
+#include "ez/Core/Base.hpp"
 #include "ez/Graphics/API/OpenGL/GL_API.h"
 #include "ez/Graphics/API/OpenGL/GL_Shader.h"
 #include "ez/Graphics/API/OpenGL/GL_MappedStreamBuffer.h"
@@ -24,15 +24,15 @@ namespace ez::gfx {
 	}
 
 	Ref<Shader> GL_API::CreateShader(const std::initializer_list<std::pair<Shader::Type, const std::string&>>& shaders) {
-		return ez::CreateRef<GL_Shader>(shaders);
+		return ez::create_ref<GL_Shader>(shaders);
 	}
 
 	Ref<StreamStorage> GL_API::CreateStreamStorage(uint32_t size, uint32_t stride) {
-		return ez::CreateRef<GL_MappedStreamBuffer>(GL_SHADER_STORAGE_BUFFER, size, stride);
+		return ez::create_ref<GL_MappedStreamBuffer>(GL_SHADER_STORAGE_BUFFER, size, stride);
 	}
 
 	Ref<TextureArray> GL_API::CreateTextureArray(uint32_t width, uint32_t height, Format format, Filter filter) {
-		return ez::CreateRef<GL_TextureArray>(width, height, format, filter);
+		return ez::create_ref<GL_TextureArray>(width, height, format, filter);
 	}
 
 

@@ -1,63 +1,62 @@
-#include "ez/Core/Base.h"
-#include "ez/Core/Profiling.h"
+#include "ez/Core/Base.hpp"
+#include "ez/Core/Profiling.hpp"
 #include <GLFW/glfw3.h>
 #include <iomanip>
 
 namespace ez::debug {
-	ProfilingTimer::ProfilingTimer(const std::string& name) 
-	: m_Name(name) {
-		m_StartTime = glfwGetTime();
+	ProfilingTimer::ProfilingTimer(const std::string& name)
+	: m_name(name) {
+		m_start_time = glfwGetTime();
 	}
 
 	ProfilingTimer::~ProfilingTimer() {
 		double endTime = glfwGetTime();
-		double duration = endTime - m_StartTime;
+		double duration = endTime - m_start_time;
 
-		Profiler::Get().AddEntry(m_Name, m_StartTime, duration);
+		Profiler::get().add_entry(m_name, m_start_time, duration);
 	}
 
-	Profiler& Profiler::Get() {
+	Profiler& Profiler::get() {
 		static Profiler instance;
 		return instance;
 	}
 
-	void Profiler::StartSession(const std::string& name) {
-		if (m_IsActive) {
+	void Profiler::start_session(const std::string& name) {
+		if (m_is_active) {
 			EZ_CORE_WARN("A new profiling session has been started before the previous one ended.");
-			EndSession();
+			end_session();
 		}
 
-		m_SessionName = name;
-		m_IsActive = true;
-		m_File.open(name + "_profile_result.json");
+		m_session_name = name;
+		m_is_active = true;
+		m_file.open(name + "_profile_result.json");
 
-		if (!m_File.is_open()) {
+		if (!m_file.is_open()) {
 			EZ_CORE_FATAL_ERROR("Could not open file for profiling result: ", name, "_profile_result.json");
 		}
 
-		m_File << "{\"otherData\": {},\"traceEvents\":[{}";
-		m_File.flush();
+		m_file << R"({"otherData": {},"traceEvents":[{})";
+		m_file.flush();
 	}
 
-	void Profiler::AddEntry(const std::string& name, double startTime, double duration) {
-		m_File << std::setprecision(6) << std::fixed;
-		m_File << ",{";
-		m_File << "\"cat\":\"function\",";
-		m_File << "\"dur\":" << duration << ',';
-		m_File << "\"name\":\"" << name << "\",";
-		m_File << "\"ph\":\"X\",";
-		m_File << "\"pid\":0,";
-		m_File << "\"tid\":0,";
-		m_File << "\"ts\":" << startTime;
-		m_File << "}";
-		m_File.flush();
+	void Profiler::add_entry(const std::string &name, double startTime, double duration) {
+		m_file << std::setprecision(6) << std::fixed;
+		m_file << ",{";
+		m_file << R"("cat":"function",)";
+		m_file << R"("dur":)" << duration << ',';
+		m_file << R"("name":")" << name << "\",";
+		m_file << R"("ph":"X",)";
+		m_file << R"("pid":0,)";
+		m_file << R"("tid":0,)";
+		m_file << R"("ts":)" << startTime;
+		m_file << "}";
+		m_file.flush();
 	}
 
-	void Profiler::EndSession() {
-		m_File << "]}";
-		m_File.flush();
-		m_File.close();
-		m_IsActive = false;
+	void Profiler::end_session() {
+		m_file << "]}";
+		m_file.flush();
+		m_file.close();
+		m_is_active = false;
 	}
-
 }

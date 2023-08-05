@@ -1,5 +1,5 @@
-#include "ez/Core/Base.h"
-#include "ez/Graphics/Renderer/Font.h"
+#include "ez/Core/Base.hpp"
+#include "ez/Graphics/Renderer/Font.hpp"
 
 #include <stb/stb_truetype.h>
 
@@ -7,11 +7,9 @@
 #include <vector>
 
 namespace ez::gfx {
-	std::shared_ptr<Font> Font::FromFile(const std::string& file) {
-		return std::make_shared<Font>(file);
-	}
+	Font::Font(const std::string& file, const Ref<RenderAPI>& device) {
+        m_texture = device->CreateTextureArray(32, 32, Format::RGBA, Filter::LINEAR);
 
-	Font::Font(const std::string& file) {
 		std::ifstream infile(file, std::ios::binary);
 
 		if (infile.is_open() == false) {
@@ -29,7 +27,12 @@ namespace ez::gfx {
 
 		int x, y, width, height;
 		float scale = stbtt_ScaleForPixelHeight(&info, 64);
-		unsigned char* data = stbtt_GetCodepointSDF(&info, scale, 32, 3, 128, 64.0, &width, &height, &x, &y);
-		//m_GlyphBuffer.PushBack(width, height, GL_RGBA, data);
+		unsigned char* data = stbtt_GetCodepointSDF(&info, scale, 'A', 3, 128, 64.0, &width, &height, &x, &y);
+		m_texture->PushBack(data);
 	}
+
+	const Ref<TextureArray>& Font::get_texture() {
+		return m_texture;
+	}
+
 }
