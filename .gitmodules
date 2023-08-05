@@ -7,3 +7,12 @@
 [submodule "ezUI/ext/stb/stb"]
 	path = ezUI/ext/stb/stb
 	url = https://github.com/nothings/stb
+[submodule "ezUI/vendor/glfw"]
+	path = ezUI/vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "ezUI/vendor/glm"]
+	path = ezUI/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "ezUI/vendor/stb/stb"]
+	path = ezUI/vendor/stb/stb
+	url = https://github.com/nothings/stb.git
