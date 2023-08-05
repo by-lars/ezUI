@@ -5,16 +5,15 @@ set(CMAKE_CXX_FLAGS "-Wall")
 
 file(GLOB_RECURSE EZ_SOURCES CONFIGURE_DEPENDS "src/ez/*.cpp")
 
-
 add_library(ezUI ${EZ_SOURCES})
 
-target_compile_definitions(ezUI EZ_DEBUG)
+target_compile_definitions(ezUI PUBLIC DEBUG)
 
 target_include_directories(ezUI SYSTEM PRIVATE "vendor/glm" "vendor/glad" "vendor/stb" "vendor/glfw/include" )
 target_include_directories(ezUI PUBLIC "src")
 
-find_package(OpenGL REQUIRED)
 add_subdirectory(vendor/glfw)
+find_package(OpenGL REQUIRED)
 target_link_libraries(ezUI OpenGL::GL glfw)
 
 #add_executable(${PROJECT_NAME} ${EZ_SOURCES})

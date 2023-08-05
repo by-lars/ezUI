@@ -1,0 +1,8 @@
+#pragma once
+
+#define EZ_BUILD_ENABLE_PROFILING 0
+#define EZ_BUILD_ENABLE_ASSERTIONS 1
+
+#ifdef DEBUG
+#define EZ_BUILD_DEBUG_MODE 1
+#endif
