@@ -1,32 +1,32 @@
-#include "ez/Graphics/API/OpenGL/GL_MappedStreamBuffer.h"
+#include "ez/Graphics/API/OpenGL/GL_MappedStreamBuffer.hpp"
 
 #include <glad/gl.h>
 #include <cstring>
 
 namespace ez::gfx {
 	GL_MappedStreamBuffer::GL_MappedStreamBuffer(GLenum bufferType, uint32_t count, uint32_t stride) {
-		m_Data = nullptr;
-		m_Type = bufferType;
-		m_Stride = stride;
-		m_MaxCount = count;
-		m_Offset = 0;
-		m_CurrentFence = 0;
-		m_Id = 0;
-		m_Fences = { 0 };
-		m_Count = 0;
+        m_data = nullptr;
+        m_type = bufferType;
+        m_stride = stride;
+        m_max_count = count;
+        m_offset = 0;
+        m_current_fence = 0;
+        m_id = 0;
+        m_fences = {0 };
+        m_count = 0;
 
-		uint32_t bufferSize = count * 3 * m_Stride;
+		uint32_t bufferSize = count * 3 * m_stride;
 		
-		glGenBuffers(1, &m_Id);
+		glGenBuffers(1, &m_id);
 
 		GLenum flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT | GL_DYNAMIC_STORAGE_BIT;
 
-		glBindBuffer(bufferType, m_Id);
+		glBindBuffer(bufferType, m_id);
 		glBufferStorage(bufferType, bufferSize, 0, flags);
-		glBindBufferBase(bufferType, 0, m_Id);
-		m_Data = (uint8_t*)glMapBufferRange(m_Type, 0, bufferSize, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+		glBindBufferBase(bufferType, 0, m_id);
+        m_data = (uint8_t*)glMapBufferRange(m_type, 0, bufferSize, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
 
-		if (m_Data == nullptr) {
+		if (m_data == nullptr) {
 			EZ_CORE_ERROR("Could not get pointer of OpenGL Buffer");
 		}
 	}
@@ -35,23 +35,23 @@ namespace ez::gfx {
 
 	}
 
-	void GL_MappedStreamBuffer::PushBack(void* data) {
-		void* location = m_Data + m_Offset * m_Stride + m_Count * m_Stride;
-		std::memcpy(location, data, m_Stride);
-		m_Count++;
+	void GL_MappedStreamBuffer::push_back(void* data) {
+		void* location = m_data + m_offset * m_stride + m_count * m_stride;
+		std::memcpy(location, data, m_stride);
+		m_count++;
 	}
 
-	uint32_t GL_MappedStreamBuffer::Count() {
-		return m_Count;
+	uint32_t GL_MappedStreamBuffer::count() {
+		return m_count;
 	}
 
-	uint32_t GL_MappedStreamBuffer::Offset() {
-		return m_Offset;
+	uint32_t GL_MappedStreamBuffer::offset() {
+		return m_offset;
 	}
 
 
-	void GL_MappedStreamBuffer::BeginFrame() {
-		GLsync sync = m_Fences[m_CurrentFence];
+	void GL_MappedStreamBuffer::begin_frame() {
+		GLsync sync = m_fences[m_current_fence];
 
 		if (sync) {
 			while (true) {
@@ -63,17 +63,17 @@ namespace ez::gfx {
 		}
 	}
 
-	void GL_MappedStreamBuffer::EndFrame() {
-		GLsync sync = m_Fences[m_CurrentFence];
+	void GL_MappedStreamBuffer::end_frame() {
+		GLsync sync = m_fences[m_current_fence];
 
 		if (sync) {
 			glDeleteSync(sync);
 		}
 
-		m_Fences[m_CurrentFence] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+        m_fences[m_current_fence] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 
-		m_CurrentFence = (m_CurrentFence + 1) % 3;
-		m_Offset = m_CurrentFence * m_MaxCount;
-		m_Count = 0;
+        m_current_fence = (m_current_fence + 1) % 3;
+        m_offset = m_current_fence * m_max_count;
+        m_count = 0;
 	}
 }

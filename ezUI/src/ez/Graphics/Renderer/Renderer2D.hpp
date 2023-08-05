@@ -3,6 +3,7 @@
 #include "ez/Core/StrongHandle.hpp"
 #include "ez/Graphics/API/RenderAPI.hpp"
 #include "ez/Graphics/API/DeviceResources.hpp"
+#include "ez/Graphics/Renderer/Color.hpp"
 
 #include <glm/glm.hpp>
 
@@ -21,8 +22,8 @@ namespace ez::gfx {
 		static void begin_frame();
 		static void end_frame();
 
-		static Brush create_solid_color_brush(glm::vec4 color);
-		static Brush create_gradient_brush(glm::vec4 color1, glm::vec4 color2);
+		static Brush create_solid_color_brush(Color color);
+		static Brush create_gradient_brush(Color color1, Color color2);
 
 		static void draw_rect(Brush brush, const glm::vec3& position, const glm::vec2& size, const glm::vec3& rotation);
 		static void draw_rect(Brush brush, const glm::vec3& position, const glm::vec2& size);

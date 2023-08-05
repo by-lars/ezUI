@@ -73,7 +73,7 @@ namespace ez::gfx {
 
 		void main() {
 			FragColor = texture(uBrushTex, vTexCoords);
-			FragColor *= boxShadow(vec2(0.2, 0.2), vec2(0.8, 0.8), vTexCoords.xy, 0.75);
+			//FragColor *= boxShadow(vec2(0.2, 0.2), vec2(0.8, 0.8), vTexCoords.xy, 0.75);
 		}
 	)";
 }

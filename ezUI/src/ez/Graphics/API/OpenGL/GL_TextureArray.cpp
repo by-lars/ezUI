@@ -1,66 +1,55 @@
-#include "ez/Graphics/API/OpenGL/GL_TextureArray.h"
+#include "ez/Graphics/API/OpenGL/GL_TextureArray.hpp"
 #include "ez/Core/Base.hpp"
 
 #include <glad/gl.h>
 
 namespace ez::gfx {
-	static GLenum TextureFormatToNative(Format format) {
+	static GLenum texture_format_to_native(Format format) {
 		switch (format) {
-		case Format::RGB:	
-			return GL_RGB;		
-		
-		case Format::RGBA:	
-			return GL_RGBA;		
-
-		default: 
-			EZ_CORE_ERROR("Unknown Texture Format");
-			return GL_INVALID_ENUM;
-		}
-	}
-
-	static GLenum TextureFormatToInternalNative(Format format) {
-		switch (format) {
-		case Format::RGB:	
-			return GL_RGB8;
-
-		case Format::RGBA:	
-			return GL_RGBA8;
+            case Format::RGB:   return GL_RGB;
+		    case Format::RGBA:  return GL_RGBA;
 
 		default:
-			EZ_CORE_ERROR("Unknown Texture Format");
-			return GL_INVALID_ENUM;
+            EZ_CORE_FATAL_ERROR("Unknown Texture Format");
 		}
 	}
 
-	static GLenum TextureFilterToNative(Filter filter) {
-		switch (filter) {
-		case Filter::LINEAR: 
-			return GL_LINEAR;	
-		
-		case Filter::NEAREST: 
-			return GL_NEAREST;
+	static GLenum texture_format_to_internal_native(Format format) {
+		switch (format) {
+		    case Format::RGB:   return GL_RGB8;
+		    case Format::RGBA:  return GL_RGBA8;
 
-		default: 
-			EZ_CORE_ERROR("Unknown Texture Format");
-			return GL_INVALID_ENUM;
+		default:
+            EZ_CORE_FATAL_ERROR("Unknown Texture Format");
+		}
+	}
+
+	static GLenum texture_filter_to_native(Filter filter) {
+		switch (filter) {
+		    case Filter::LINEAR:    return GL_LINEAR;
+            case Filter::NEAREST:   return GL_NEAREST;
+
+		default:
+            EZ_CORE_FATAL_ERROR("Unknown Texture Format");
 		}
 	}
 
 	GL_TextureArray::GL_TextureArray(uint32_t width, uint32_t height, Format format, Filter filter) {
-		GLenum internalNativeFormat = TextureFormatToInternalNative(format);
-		GLenum nativeFormat = TextureFormatToNative(format);
-		GLenum nativeFilter = TextureFilterToNative(filter);
+		GLenum internalNativeFormat = texture_format_to_internal_native(format);
+		GLenum nativeFormat = texture_format_to_native(format);
+		GLenum nativeFilter = texture_filter_to_native(filter);
 
-		m_Width = width;
-		m_Height = height;
-		m_Format = nativeFormat;
-		m_MaxLayers = 0;
-		m_NextLayer = 0;
-		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &m_MaxLayers);
+        m_width = width;
+        m_height = height;
+        m_format = nativeFormat;
+        m_max_layers = 0;
+        m_next_layer = 0;
 
-		glGenTextures(1, &m_Texture);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, internalNativeFormat, width, height, m_MaxLayers);
+		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &m_max_layers);
+
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, internalNativeFormat, width, height, m_max_layers);
 
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -71,48 +60,48 @@ namespace ez::gfx {
 	}
 
 	GL_TextureArray::~GL_TextureArray() {
-		glDeleteTextures(1, &m_Texture);
+		glDeleteTextures(1, &m_texture);
 	}
 
-	void GL_TextureArray::Bind() {
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
+	void GL_TextureArray::bind() {
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	}
 
-	uint32_t GL_TextureArray::GetMaxLayers() {
-		return m_MaxLayers;
+	uint32_t GL_TextureArray::get_max_layers() {
+		return m_max_layers;
 	}
 
-	void GL_TextureArray::BindToSlot(uint32_t slot) {
+	void GL_TextureArray::bind_to_slot(uint32_t slot) {
 		EZ_CORE_ASSERT(slot > 0, "Slot must be grater than 0");
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 		glActiveTexture(GL_TEXTURE0);
 	}
 
-	Layer GL_TextureArray::PushBack(void* data) {
+	Layer GL_TextureArray::push_back(void* data) {
 		Layer layer;
-		if (m_FreeLayers.empty()) {
-			layer = Layer(m_NextLayer);
-			m_NextLayer++;
+		if (m_free_layers.empty()) {
+			layer = Layer(m_next_layer);
+			m_next_layer++;
 		}
 		else {
-			layer = m_FreeLayers.front();
-			m_FreeLayers.pop();
+			layer = m_free_layers.front();
+			m_free_layers.pop();
 		}
 
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_Texture);
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, (GLint)layer, m_Width, m_Height, 1, m_Format, GL_UNSIGNED_BYTE, data);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, (GLint)layer, m_width, m_height, 1, m_format, GL_UNSIGNED_BYTE, data);
 		return layer;	
 	}
 
-	void GL_TextureArray::Erase(Layer layer) {
-		m_FreeLayers.push(layer);
+	void GL_TextureArray::erase(Layer layer) {
+		m_free_layers.push(layer);
 	}
 
 	//HTexture OpenGLAPI::CreateTexture(uint32_t width, uint32_t height, TextureFormat format, TextureFilter filter) {
-	//	GLenum internalNativeFormat = TextureFormatToInternalNative(format);
-	//	GLenum nativeFormat = TextureFormatToNative(format);
-	//	GLenum nativeFilter = TextureFilterToNative(filter);
+	//	GLenum internalNativeFormat = texture_format_to_internal_native(format);
+	//	GLenum nativeFormat = texture_format_to_native(format);
+	//	GLenum nativeFilter = texture_filter_to_native(filter);
 
 	//	GLuint tex;
 	//	glGenTextures(1, &tex);

@@ -22,7 +22,12 @@ namespace ez {
 		}
 	}
 
-	UIApp::UIApp(const UIApp::Specification& settings) {
+    static void ErrorCallback(int, const char* err_str) {
+        EZ_CORE_DEBUG("GLFW: ", err_str);
+    }
+
+
+    UIApp::UIApp(const UIApp::Specification& settings) {
         s_instance = this;
 
 		ez::Logger::init();
@@ -34,6 +39,7 @@ namespace ez {
         m_spec = settings;
 
 		glfwInit();
+        glfwSetErrorCallback(ErrorCallback);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_SAMPLES, 4);
@@ -44,17 +50,19 @@ namespace ez {
 		#endif
 
         m_window = glfwCreateWindow(m_spec.width, m_spec.height, m_spec.title.c_str(), nullptr, nullptr);
+        EZ_CORE_ASSERT(m_window != nullptr, "Failed to create window");
+
 		glfwMakeContextCurrent(m_window);
 		glfwSetFramebufferSizeCallback(m_window, UIApp::on_framebuffer_size_changed);
 		glfwSetWindowUserPointer(m_window, this);
 
         gfx::Renderer2D::init(m_spec.width, m_spec.height);
 
-		defaultBrush = gfx::Renderer2D::create_solid_color_brush(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		defaultBrush2 = gfx::Renderer2D::create_solid_color_brush(glm::vec4(0.0, 1.0, 1.0, 1.0));
+		defaultBrush = gfx::Renderer2D::create_solid_color_brush(gfx::Color(255));
+		defaultBrush2 = gfx::Renderer2D::create_solid_color_brush(gfx::Color (0));
 
-		gradientBrush = gfx::Renderer2D::create_gradient_brush(glm::vec4(0.98f, 0.18f, 0.63f, 1.0f),
-                                                               glm::vec4(0.94f, 0.24f, 0.3f, 1.0f));
+		gradientBrush = gfx::Renderer2D::create_gradient_brush(gfx::Color(0.98f, 0.18f, 0.63f, 1.0f),
+                                                               gfx::Color(0.94f, 0.24f, 0.3f, 1.0f));
 			 
 		EZ_PROFILE_END_SESSION();
 	}
@@ -92,7 +100,7 @@ namespace ez {
 				for (int y = 0; y < 16; y++) {
                     gfx::Renderer2D::draw_rect(defaultBrush,
                                                glm::vec3(x * 65, y * 65, sin(4 * currentFrameTime + x + y) * 10),
-                                               glm::vec2(64, 64), glm::vec3(0));
+                                               glm::vec2(60, 60), glm::vec3(0));
 				}
 			}
 
