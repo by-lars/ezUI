@@ -1,5 +1,7 @@
 #pragma once
-#include "ez/Graphics/API/DeviceResources.hpp"
+#include "ez/Graphics/API/Enums.hpp"
+#include "ez/Graphics/API/TextureArray.hpp"
+
 #include <glad/gl.h>
 
 namespace ez::gfx {

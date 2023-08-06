@@ -1,5 +1,6 @@
 #pragma once
-#include "ez/Graphics/API/DeviceResources.hpp"
+#include "ez/Graphics/API/Enums.hpp"
+#include "ez/Graphics/API/Shader.hpp"
 
 namespace ez::gfx {
 	class GL_Shader : public Shader {

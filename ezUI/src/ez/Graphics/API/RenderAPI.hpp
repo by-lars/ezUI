@@ -1,6 +1,10 @@
 #pragma once
 #include "ez/Core/Base.hpp"
-#include "ez/Graphics/API/DeviceResources.hpp"
+
+#include "ez/Graphics/API/Enums.hpp"
+#include "ez/Graphics/API/Shader.hpp"
+#include "ez/Graphics/API/TextureArray.hpp"
+#include "ez/Graphics/API/StreamStorage.hpp"
 
 #include <memory>
 #include <string>

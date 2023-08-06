@@ -2,7 +2,7 @@
 #include "ez/Core/Base.hpp"
 #include "ez/Core/StrongHandle.hpp"
 #include "ez/Graphics/API/RenderAPI.hpp"
-#include "ez/Graphics/API/DeviceResources.hpp"
+#include "ez/Graphics/API/Enums.hpp"
 #include "ez/Graphics/Renderer/Color.hpp"
 
 #include <glm/glm.hpp>

@@ -1,5 +1,6 @@
 #pragma once
-#include "ez/Graphics/API/DeviceResources.hpp"
+#include "ez/Graphics/API/StreamStorage.hpp"
+
 #include <glad/gl.h>
 #include <array>
 
