@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ez/Build/BuildConfig.hpp"
 #include "ez/Core/Logger.hpp"
 
 #include <string>

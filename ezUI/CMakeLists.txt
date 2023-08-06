@@ -7,7 +7,10 @@ file(GLOB_RECURSE EZ_SOURCES CONFIGURE_DEPENDS "src/ez/*.cpp")
 
 add_library(ezUI ${EZ_SOURCES})
 
-target_compile_definitions(ezUI PUBLIC DEBUG)
+#target_compile_definitions(ezUI PUBLIC EZ_BUILD_ENABLE_PROFILING)
+target_compile_definitions(ezUI PUBLIC EZ_BUILD_ENABLE_ASSERTIONS)
+target_compile_definitions(ezUI PUBLIC EZ_BUILD_DEBUG_MODE)
+
 
 target_include_directories(ezUI SYSTEM PRIVATE "vendor/glm" "vendor/glad" "vendor/stb" "vendor/glfw/include" )
 target_include_directories(ezUI PUBLIC "src")

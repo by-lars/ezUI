@@ -22,7 +22,7 @@ namespace ez {
 		}
 	}
 
-    static void ErrorCallback(int, const char* err_str) {
+    static void error_callback(int, const char* err_str) {
         EZ_CORE_DEBUG("GLFW: ", err_str);
     }
 
@@ -39,7 +39,7 @@ namespace ez {
         m_spec = settings;
 
 		glfwInit();
-        glfwSetErrorCallback(ErrorCallback);
+        glfwSetErrorCallback(error_callback);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_SAMPLES, 4);
@@ -91,6 +91,7 @@ namespace ez {
 			glfwSetWindowTitle(m_window, frameRate.c_str());
 
             gfx::Renderer2D::begin_frame();
+
             gfx::Renderer2D::set_view_matrix(glm::mat4(1.0f));
 
             gfx::Renderer2D::draw_rect(gradientBrush, glm::vec3(0, 0, 0), glm::vec3(m_spec.width, m_spec.height, 0),
@@ -103,6 +104,8 @@ namespace ez {
                                                glm::vec2(60, 60), glm::vec3(0));
 				}
 			}
+
+            gfx::Renderer2D::draw_rect(defaultBrush2, glm::vec3(1,1,0), glm::vec2(32,32));
 
             gfx::Renderer2D::end_frame();
 		

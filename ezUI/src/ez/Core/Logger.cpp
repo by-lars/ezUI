@@ -1,5 +1,4 @@
 #include "ez/Core/Logger.hpp"
-#include "ez/Build/BuildConfig.hpp"
 
 #ifdef _WIN32
 #include <Windows.h>
